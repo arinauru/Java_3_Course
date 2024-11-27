@@ -1,0 +1,46 @@
+Принцип подстановки Лисков гласит, что функции, которые 
+используют базовый тип, должны иметь возможность 
+использовать подтипы базового типа, не зная об этом.
+Покажем пример:
+Есть класс Rectangle (прямоугольник):
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def set_width(self, width):
+        self.width = width
+    
+    def set_height(self, height):
+        self.height = height
+    
+    def get_area(self):
+        return self.width * self.height
+Есть подкласс Square (квадрат), который должен 
+быть частным случаем прямоугольника:
+class Square(Rectangle):
+    def set_width(self, width):
+        self.width = width
+        self.height = width  # У квадрата ширина равна высоте
+    
+    def set_height(self, height):
+        self.width = height
+        self.height = height  # У квадрата высота равна ширине
+Код, который ожидает объект Rectangle, может работать 
+некорректно, если вместо него будет использован 
+объект Square:
+def process_shape(rectangle):
+    rectangle.set_width(5)
+    rectangle.set_height(10)
+    print("Площадь:", rectangle.get_area())
+
+rect = Rectangle(0, 0)
+sq = Square(0, 0)
+
+process_shape(rect)  # Ожидаемая площадь: 50
+process_shape(sq)    # Площадь: 100 (нарушение логики!)
+При использовании объекта Square вместо Rectangle ширина 
+и высота перестают быть независимыми.
+Для соблюдения LSP можно выделить отдельные классы 
+для прямоугольников и квадратов, а общий функционал 
+вынести в абстрактный базовый класс Shape:
