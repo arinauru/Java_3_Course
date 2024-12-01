@@ -1,0 +1,34 @@
+Как можно проинициализировать константу, которая объявлена следующим образом? Приведите все возможные варианты.
+
+public class A {
+    public final int a;
+}
+1) Инициализация при объявлении:
+public class A {
+    public final int a = 10;
+}
+2) Инициализация в конструкторе:
+public class A {
+    public final int a;
+
+    public A() {
+        a = 1;
+    }
+}
+
+3) Инициализация в конструкторе с параметром:
+public class A {
+    public final int a;
+
+    public A(int value) {
+        a = value; 
+    }
+}
+4) Инициализация в нестатическом блоке:
+public class A {
+    public final int a;
+
+    {
+        a = 1; 
+    }
+}
